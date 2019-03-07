@@ -1,0 +1,56 @@
+\documentclass{jarticle}
+
+\evensidemargin 0.0in
+\oddsidemargin 0.0in
+\topmargin 0.0in
+\textwidth 15.9cm
+\textheight 8.0in
+\headheight 0.0in
+\headsep 0.0in
+\topskip 0.0in
+\textheight 9.0in
+\renewcommand{\baselinestretch}{1.2}
+
+\def\vec#1{\mbox{\boldmath $#1$}}
+
+\begin{document} 
+\setcounter{section}{3}
+\setcounter{subsection}{2}
+\setcounter{subsubsection}{3}
+\subsubsection{カルマンフィルタ(KF)の数学的導出}
+まずは予測ステップの導出から始める。1ステップ前の信念$bel(x_{t-1})$に、制御$u_t$が加わったあとの信念$\overline{bel}(x_t) $が計算できる。
+\begin{eqnarray}
+\overline{bel}(x_t) &=& \int p(x_t | x_{t-1}, u_t) bel(x_{t-1}) dx_{t-1} \\
+&=&\int \mathcal{N}(x_t; A_t x_{t-1} + B_t u_t, R_t) \mathcal{N}(x_{t-1}; \mu _{t-1}, \Sigma _{t-1}) dx_{t-1}
+\end{eqnarray}
+
+ただし、$ \mathcal{N}(x; \mu, \Sigma )$は平均$\mu$、共分散行列$\Sigma$のガウス分布の$x$における確率密度を表す。具体的にガウス分布で表示すると
+
+\begin{eqnarray}
+\overline{bel}(x_t) &=&\int \mathcal{N}(x_t; A_t x_{t-1} + B_t u_t, R_t) \mathcal{N}(x_{t-1}; \mu _{t-1}, \Sigma _{t-1}) dx_{t-1}\\
+&=& \eta \int \exp[-\frac{1}{2}(x_t - (A_t x_{t-1} + B_t u_t))^T R_t ^{-1}(x_t - (A_t x_{t-1} + B_t u_t)) ] \nonumber \\
+&& \hspace{3cm} \exp[-\frac{1}{2} (x_{t-1}-\mu _{t-1})^T  \Sigma ^{-1}  (x_{t-1}-\mu _{t-1})]dx_{t-1}
+\end{eqnarray}
+
+指数関数の積は肩の和を取ればよい。なので以下のように関数$L_t$を使って書き換えられる。
+
+\begin{eqnarray}
+\overline{bel}(x_t) &=& \eta \int \exp[-L_t] dx_{t-1}\\
+ L_t &=&\frac{1}{2}(x_t - (A_t x_{t-1} + B_t u_t))^T R_t ^{-1}(x_t - (A_t x_{t-1} + B_t u_t)) \nonumber  \\
+ && \hspace{3cm}+\frac{1}{2} (x_{t-1}-\mu _{t-1})^T  \Sigma ^{-1}  (x_{t-1}-\mu _{t-1})
+\end{eqnarray}
+
+$x_{t-1}$に関する積分を実行するために、$L_t$を$x_{t-1}$によらない項のみを含む部分$L_t (x_t)$と、$x_{t-1}$による項も含む部分$L_t (x_{t-1},x_t)$に分解する（$L_t (x_{t-1},x_t)$は$x_{t-1}$によらない項を含んでもよい、なので一意な分解ではない）。こうすると、この積分は
+
+\begin{eqnarray}
+\overline{bel}(x_t) &=& \eta L_t (x_t)  \int \exp L_t (x_{t-1},x_t)dx_{t-1}\\
+\end{eqnarray}
+
+とかける。この積分だが、$L_t$が$x_{t-1}$に関して2次式だったことを思い出すと、$x_{t-1}$に関して「平方完成」すればある$x_{t-1}$によらないベクトル$\xi$と行列$\Psi$を用いて、$(x_{t-1}-\xi)^T \Psi^{-1} (x_{t-1}-\xi)$の形に変形できそうである。この形に変形できれば、$\exp L_t (x_{t-1},x_t)$の積分は多変量正規分布$\mathcal{N}(x_{t-1};\xi,\Psi )$の規格化定数を求める積分と全く同じになり、特に$x_t$によらない定数になる。
+
+この変形を行うため、あえて$L_t (x_{t-1},x_t)$は$x_{t-1}$によらない項を含めても良いことにしている。
+
+$\exp L_t (x_{t-1},x_t)$の積分を多変量正規分布$\mathcal{N}(x_{t-1};\xi,\Psi )$の積分の形にもっていくために、この分布$\exp L_t (x_{t-1},x_t)$の頂点の座標$\xi$を求める。これは$L_t$を$x_{t-1}$で微分して0になる点を求めればよい。
+
+
+\end{document}
