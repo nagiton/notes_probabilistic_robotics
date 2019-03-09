@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.6-141210-2.6 (utf8.euc) (TeX Live 2015/Debian) (preloaded format=platex 2019.3.7)  8 MAR 2019 00:10
+This is e-pTeX, Version 3.14159265-p3.6-141210-2.6 (utf8.euc) (TeX Live 2015/Debian) (preloaded format=platex 2019.3.7)  9 MAR 2019 11:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -67,7 +67,7 @@ it/10 L[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]; x[]\OT1/cmr/m/n/10 )$
 
 [1
 
-] (./ch3.aux) ) 
+] [2] (./ch3.aux) ) 
 Here is how much of TeX's memory you used:
  255 strings out of 493723
  2544 string characters out of 6152571
@@ -75,6 +75,6 @@ Here is how much of TeX's memory you used:
  3881 multiletter control sequences out of 15000+600000
  7819 words of font info for 32 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 22i,6n,20p,422b,155s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 22i,7n,20p,422b,155s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on ch3.dvi (1 page, 5628 bytes).
+Output written on ch3.dvi (2 pages, 7056 bytes).

@@ -1,4 +1,6 @@
 \documentclass{jarticle}
+\usepackage{amsmath,amssymb}
+
 
 \evensidemargin 0.0in
 \oddsidemargin 0.0in
@@ -19,7 +21,7 @@
 \subsection{アインシュタインの縮約}
 本ノートではアインシュタインの縮約記法を用いる。
 
-すなわち、同じ添字がついた文字の積は、その添字について和をとっているものとみなす。
+すなわち、成分を表す同じ添字がついた文字の積は、その添字について和をとっているものとみなす。
 
 例を挙げると、$\vec{x}=(x_1, x_2,x_3)$というベクトルと$\vec{y}=(y_1,y_2,y_3)$というベクトルの内積は以下のようになる。
 
@@ -30,5 +32,49 @@
 記法になれるまではスムーズに読めないかもしれないが、この記法を使わないと行列やベクトルの積を成分表示したときに和の記号がたくさん出てきてしまい、かえって混乱を招くように思う。
 
 また、この記法を使うと、あえて和をとらない$ x_i y_i $がほしいときどうするのか疑問に思うかもしれない。その場合はクロネッカーのデルタを用いて$  \delta _{ij} x_j y_j$などとすればよい。
+
+\subsection{行列・ベクトルを含む式の微分}
+行列やベクトルを含む式でも、スカラーの場合のような微分に関する公式が成り立つことを確認しておく。
+
+なお、$  \frac{\partial \vec{u}}{\partial x_i}$は、ベクトル$\vec{u}$の各成分に関して$x_i$で微分したベクトルを表しており、
+$ \frac{\partial f(\vec{x})}{\partial x_i}$は、ベクトル$\vec{x}$に依存するスカラー関数$f$をベクトル$\vec{x}$の$i$番目の成分で微分したものを$i$番目の成分に持つベクトル$( \frac{\partial f(\vec{x})}{\partial x_1}, \frac{\partial f(\vec{x})}{\partial x_2},...)$を表している
+
+
+\subsubsection{定数行列がかかったベクトルの微分}
+ベクトル$\vec{x} (\in \mathbb{R}^n)$に依存するベクトル値関数$\vec{u}(\vec{x})$と定数行列$A (\in \mathbb{R}^{n\times n})$に関して以下がなりたつ
+\begin{eqnarray}
+\frac{\partial}{\partial x_i} A \vec{u} =A \frac{\partial  \vec{u} }{\partial x_i}
+\end{eqnarray}
+
+実際に成分で計算してみると
+\begin{eqnarray}
+\frac{\partial}{\partial x_i} A \vec{u} &=& \frac{\partial}{\partial x_i} A_{\alpha \beta} u_{\beta} \\
+&=& A_{\alpha \beta}\frac{\partial u_{\beta}}{\partial x_i}  \hspace{1cm}\mbox{($ A_{\alpha \beta}$はスカラーの定数なので微分の影響を受けない)}\\
+&=& A \frac{\partial  \vec{u} }{\partial x_i} \hspace{1cm}\mbox{(行列とベクトルの積の定義より)}
+\end{eqnarray}
+
+\subsubsection{積の微分}
+
+ベクトル$\vec{x} (\in \mathbb{R}^n)$に依存する２つのベクトル値関数$\vec{u}(\vec{x}),\vec{v}(\vec{x})(\in \mathbb{R}^n)$に関して、$\vec{x} $の第$i$成分を$x_i$、として以下が成り立つ。
+\begin{eqnarray}
+\frac{\partial}{\partial x_i} \vec{u}^T  \cdot \vec{v} = \left( \frac{\partial \vec{u}}{\partial x_i}\right) ^T \cdot \vec{v} +  \vec{u} \cdot \left( \frac{\partial \vec{v}}{\partial x_i}\right) 
+\end{eqnarray}
+
+
+実際に成分ごとに計算して確認すると
+
+\begin{eqnarray}
+\frac{\partial}{\partial x_i} \vec{u}^T   \vec{v} &=&\frac{\partial}{\partial x_i}(u_\alpha v_\alpha) \\
+&=& \frac{\partial u_\alpha}{\partial x_i}  v_\alpha + u_\alpha \frac{\partial v_\alpha}{\partial x_i} \hspace{1cm}\mbox{(スカラーに対する積の微分)}\\
+&=&\left( \frac{\partial \vec{u}}{\partial x_i}\right) ^T \cdot \vec{v} +  \vec{u} \cdot \left( \frac{\partial \vec{v}}{\partial x_i}\right) 
+\end{eqnarray}
+
+
+特別な場合として、定数行列$A (\in \mathbb{R}^{n\times n})$に関して、行列$A$の$i,j$成分を$A_{ij}$として以下が成り立つ。
+\begin{eqnarray}
+\frac{\partial}{\partial x_i} \vec{u}^T  A \vec{v} = \left( \frac{\partial \vec{u}}{\partial x_i}\right) ^T A \vec{v} +  \vec{u}A\left( \frac{\partial \vec{v}}{\partial x_i}\right) 
+\end{eqnarray}
+
+定数行列がかかったベクトルの微分と積の微分を両方使うことで確認できる。
 
 \end{document}

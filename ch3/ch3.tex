@@ -1,4 +1,6 @@
 \documentclass{jarticle}
+\usepackage{amsmath,amssymb}
+
 
 \evensidemargin 0.0in
 \oddsidemargin 0.0in
@@ -50,7 +52,17 @@ $x_{t-1}$に関する積分を実行するために、$L_t$を$x_{t-1}$によら
 
 この変形を行うため、あえて$L_t (x_{t-1},x_t)$は$x_{t-1}$によらない項を含めても良いことにしている。
 
-$\exp L_t (x_{t-1},x_t)$の積分を多変量正規分布$\mathcal{N}(x_{t-1};\xi,\Psi )$の積分の形にもっていくために、この分布$\exp L_t (x_{t-1},x_t)$の頂点の座標$\xi$を求める。これは$L_t$を$x_{t-1}$で微分して0になる点を求めればよい。
+$\exp L_t (x_{t-1},x_t)$の積分を多変量正規分布$\mathcal{N}(x_{t-1};\xi,\Psi )$の積分の形にもっていくために、この分布$\exp L_t (x_{t-1},x_t)$の頂点の座標$\xi$を求める。頂点$\xi$では、$L_t (x_{t-1},x_t)$はベクトル$x_{t-1}$のあらゆる方向に対して微分係数が0になっている。なので、$L_t (x_{t-1},x_t)$を$x_{t-1}$の各成分に関して微分したもの（この操作を「$L_t$を$x_{t-1}$で微分」という）がすべて0となっている。
+
+$x_{t-1}$の第$i$成分を$x_{i,t-1}$とし、実際にこの計算を実行すると
+
+\begin{eqnarray}
+\frac{\partial  L_t}{\partial x_{i,t-1}}  &=&\frac{\partial }{\partial x_{i,t-1}}   \frac{1}{2}(x_t - (A_t x_{t-1} + B_t u_t))^T R_t ^{-1}(x_t - (A_t x_{t-1} + B_t u_t)) \nonumber  \\
+ && \hspace{3cm}+\frac{\partial }{\partial x_{i,t-1}}  \frac{1}{2} (x_{t-1}-\mu _{t-1})^T  \Sigma ^{-1}  (x_{t-1}-\mu _{t-1}) \\
+ &=&
+\end{eqnarray}
+
+
 
 
 \end{document}
