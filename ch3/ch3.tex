@@ -48,7 +48,7 @@ $x_{t-1}$に関する積分を実行するために、$L_t$を$x_{t-1}$によら
 \overline{bel}(x_t) &=& \eta L_t (x_t)  \int \exp L_t (x_{t-1},x_t)dx_{t-1}\\
 \end{eqnarray}
 
-とかける。この積分だが、$L_t$が$x_{t-1}$に関して2次式だったことを思い出すと、$x_{t-1}$に関して「平方完成」すればある$x_{t-1}$によらないベクトル$\xi$と行列$\Psi$を用いて、$(x_{t-1}-\xi)^T \Psi^{-1} (x_{t-1}-\xi)$の形に変形できそうである。この形に変形できれば、$\exp L_t (x_{t-1},x_t)$の積分は多変量正規分布$\mathcal{N}(x_{t-1};\xi,\Psi )$の規格化定数を求める積分と全く同じになり、特に$x_t$によらない定数になる。
+とかける。この積分だが、$L_t$が$x_{t-1}$に関して2次式だったことを思い出すと、$x_{t-1}$に関して「平方完成」すればある$x_{t-1}$によらないベクトル$\xi$と行列$\Psi$を用いて、$\frac{1}{2}(x_{t-1}-\xi)^T \Psi^{-1} (x_{t-1}-\xi)$の形に変形できそうである。この形に変形できれば、$\exp L_t (x_{t-1},x_t)$の積分は多変量正規分布$\mathcal{N}(x_{t-1};\xi,\Psi )$の規格化定数を求める積分と全く同じになり、特に$x_t$によらない定数になる。
 
 この変形を行うため、あえて$L_t (x_{t-1},x_t)$は$x_{t-1}$によらない項を含めても良いことにしている。
 
@@ -58,9 +58,51 @@ $x_{t-1}$の第$i$成分を$x_{i,t-1}$とし、実際にこの計算を実行す
 
 \begin{eqnarray}
 \frac{\partial  L_t}{\partial x_{i,t-1}}  &=&\frac{\partial }{\partial x_{i,t-1}}   \frac{1}{2}(x_t - (A_t x_{t-1} + B_t u_t))^T R_t ^{-1}(x_t - (A_t x_{t-1} + B_t u_t)) \nonumber  \\
- && \hspace{3cm}+\frac{\partial }{\partial x_{i,t-1}}  \frac{1}{2} (x_{t-1}-\mu _{t-1})^T  \Sigma ^{-1}  (x_{t-1}-\mu _{t-1}) \\
- &=&
+ && \hspace{3cm}+\frac{\partial }{\partial x_{i,t-1}}  \frac{1}{2} (x_{t-1}-\mu _{t-1}) ^T \Sigma ^{-1}_{t-1}  (x_{t-1}-\mu _{t-1}) \\
+ &=&\left( -\frac{1}{2} \frac{\partial A_{\alpha \beta } x_{\beta , t-1}}{\partial x_{i, t-1}} \right) R_{\alpha \gamma ,t } ^{-1}(x_{\gamma ,t} - (A_{\gamma \delta ,t }  x_{\delta ,t-1} + B_{\gamma \delta ,t} u_{\delta ,t})) \nonumber  \\
+&&+(x_{\alpha ,t}-(A_{\alpha \beta ,t }  x_{\beta ,t-1} + B_{\alpha \beta ,t} u_{\beta ,t})R_{\alpha \gamma ,t } ^{-1} \left( -\frac{1}{2} \frac{\partial A_{\gamma \delta } x_{\delta , t-1}}{\partial x_{i, t-1}} \right)\nonumber  \\
+&&-\frac{1}{2}\frac{\partial x_{\alpha ,t-1}}{\partial x_{i,t-1}}\Sigma _{\alpha \gamma,t-1} ^{-1}  (x_{\gamma ,t-1}-\mu _{\gamma ,t-1})\nonumber  \\
+&&-\frac{1}{2}(x_{\alpha ,t-1}-\mu _{\alpha ,t-1})\Sigma _{\alpha \gamma,t-1} ^{-1}   \frac{\partial x_{\gamma ,t-1}}{\partial x_{i,t-1}} \hspace{1cm} \mbox{(積の微分)} \\
+&=&-\frac{1}{2}A_{\alpha i}R_{\alpha \gamma ,t } ^{-1}(x_{\gamma ,t} - (A_{\gamma \delta ,t }  x_{\delta ,t-1} + B_{\gamma \delta ,t} u_{\delta ,t})) \nonumber  \\
+&&-\frac{1}{2}(x_{\alpha ,t}-(A_{\alpha \beta ,t }  x_{\beta ,t-1} + B_{\alpha \beta ,t} u_{\beta ,t}))R_{\alpha \gamma ,t } ^{-1} A _{\gamma i}\nonumber  \\
+&&-\frac{1}{2}\Sigma ^{-1} _{i,\gamma,t-1} (x_{\gamma ,t-1}-\mu _{\gamma ,t-1})-\frac{1}{2}(x_{\alpha ,t-1}-\mu _{\alpha ,t-1})\Sigma ^{-1}_{\alpha i,t-1} \\
+&&\hspace{0.5cm} \mbox{(微分すると$\beta=i$のような項しか残らない。クロネッカーのデルタを使うと$\frac{\partial x_j}{\partial x_i} = \delta _{ij}$)} \nonumber \\
+&=& -\frac{1}{2}A^T _{ i \alpha }R_{\alpha \gamma ,t } ^{-1}(x_{\gamma ,t} - (A_{\gamma \delta ,t }  x_{\delta ,t-1} + B_{\gamma \delta ,t} u_{\delta ,t})) \nonumber  \\
+&&-\frac{1}{2}(x_{\alpha ,t}-(A_{\alpha \beta ,t }  x_{\beta ,t-1} + B_{\alpha \beta ,t} u_{\beta ,t}))R_{\alpha \gamma ,t } ^{-1} A _{\gamma i}\nonumber  \\
+&&-\frac{1}{2}\Sigma ^{-1} _{i,\gamma,t-1} (x_{\gamma ,t-1}-\mu _{\gamma ,t-1})-\frac{1}{2}(x_{\alpha ,t-1}-\mu _{\alpha ,t-1})\Sigma ^{-1}_{\alpha i,t-1}\hspace{1cm} \mbox{($A^T _{ij} = A_{ji}$より)} \\
+&=& -\frac{1}{2}A^T _{ i \alpha }R_{\alpha \gamma ,t } ^{-1}(x_{\gamma ,t} - (A_{\gamma \delta ,t }  x_{\delta ,t-1} + B_{\gamma \delta ,t} u_{\delta ,t})) \nonumber  \\
+&&-\frac{1}{2} A _{\gamma i}R_{\alpha \gamma ,t } ^{-1}(x_{\alpha ,t}-(A_{\alpha \beta ,t }  x_{\beta ,t-1} + B_{\alpha \beta ,t} u_{\beta ,t}))\nonumber  \\
+&&-\frac{1}{2}\Sigma ^{-1} _{i\gamma,t-1} (x_{\gamma ,t-1}-\mu _{\gamma ,t-1})-\frac{1}{2}(x_{\alpha ,t-1}-\mu _{\alpha ,t-1})\Sigma ^{-1}_{\alpha i,t-1}\nonumber\\
+&&\hspace{0.5cm} \mbox{(各成分はスカラーなので可換)} \\
+&=& -\frac{1}{2}A^T _{ i \alpha }R_{\alpha \gamma ,t } ^{-1}(x_{\gamma ,t} - (A_{\gamma \delta ,t }  x_{\delta ,t-1} + B_{\gamma \delta ,t} u_{\delta ,t})) \nonumber  \\
+&&-\frac{1}{2} A ^T _{i \gamma }R_{\gamma \alpha ,t } ^{-1}(x_{\alpha ,t}-(A_{\alpha \beta ,t }  x_{\beta ,t-1} + B_{\alpha \beta ,t} u_{\beta ,t}))\nonumber  \\
+&&-\frac{1}{2}\Sigma ^{-1} _{i\gamma ,t-1} (x_{\gamma ,t-1}-\mu _{\gamma ,t-1})-\frac{1}{2}\Sigma ^{-1}_{i \alpha ,t-1}(x_{\alpha ,t-1}-\mu _{\alpha ,t-1}) \nonumber \\
+&&\hspace{0.5cm} \mbox{(共分散行列は対称なので添字を入れ替え、さらに$A$を転置。第四項も同様)} 
 \end{eqnarray}
+第一項と第二項は和に使われている添字が違うだけで、全く同じ項である。第三項、第四項についても同じである。結局
+
+\begin{eqnarray}
+\frac{\partial  L_t}{\partial x_{i,t-1}}  &=& -A^T _{ i \alpha }R_{\alpha \gamma ,t } ^{-1}(x_{\gamma ,t} - (A_{\gamma \delta ,t }  x_{\delta ,t-1} + B_{\gamma \delta ,t} u_{\delta ,t})) +\Sigma ^{-1}_{i \alpha}(x_{\alpha ,t-1}-\mu _{\alpha ,t-1})
+\end{eqnarray}
+
+が得られるので、行列とベクトルの積を計算してまとめてかくと
+\begin{eqnarray}
+\frac{\partial  L_t}{\partial x_{t-1}}  &=& -A^T R_t ^{-1}(x_{ t} - (A_{ ,t }  x_{t-1} + B_{t} u_{t})) +\Sigma ^{-1}_{t-1}(x_{t-1}-\mu _{t-1})
+\end{eqnarray}
+
+$L_t (x_{t-1},x_t)$はベクトル$x_{t-1}$のあらゆる方向に対して微分係数が0になっている点$x_{t-1} = \xi$を求めたかったのだから、上の式がゼロベクトルと等しいとした方程式を$x_{t-1}$に関して解けばよい。
+
+実際に変形をはじめるまえにもうひとつ別の量を計算しておく。$L_t (x_{t-1},x_t)=(x_{t-1}-\xi)^T \Psi^{-1} (x_{t-1}-\xi)$の形に変形する際のあらたな共分散行列$\Psi$だ。$L_t (x_{t-1},x_t)=\frac{1}{2}(x_{t-1}-\xi)^T \Psi^{-1} (x_{t-1}-\xi)$に変形できることを仮定すると、この行列は以下のように計算できる
+
+\begin{eqnarray}
+\Psi _{ij} ^{-1 }&=& \frac{\partial ^2 L_t (x_{t-1},x_t)}{\partial x_{i,t-1}\partial x_{j,t-1}} =\frac{\partial ^2 L_t}{\partial x_{i,t-1}\partial x_{j,t-1}}\\ &&\hspace{0.5cm} \mbox{($L_t (x_t)$は$x_{t-1}$で微分してもゼロ)}\\
+&=&\frac{1}{2} \frac{\partial ^2 }{\partial x_{i,t-1}\partial x_{j,t-1}} (x_{t-1}-\xi)^T \Psi^{-1} (x_{t-1}-\xi) \\
+&=& \frac{1}{2} \frac{\partial }{\partial x_{i,t-1}}  \Psi^{-1}_{j \alpha } (x_{\alpha t-1}-\xi _\alpha) +\frac{1}{2} \frac{\partial }{\partial x_{i,t-1}}  (x_{\alpha t-1}-\xi _\alpha)^T \Psi^{-1}_{\alpha j}  \\
+&=& \frac{1}{2}(\Psi ^{-1}_{ij}+\Psi ^{-1}_{ji})
+\end{eqnarray}
+$\Psi$は定義から共分散行列で対称行列で、対称行列の逆行列はまた対称行列になる($1=(AA^{-1})^T=(A^{-1})^TA$だから、$A^{-1}=(A^{-1})^T$)ので両辺は等しい。なので$\Psi$を求めるため、$L_t$をさらにもう一回微分する。
+
+
 
 
 
