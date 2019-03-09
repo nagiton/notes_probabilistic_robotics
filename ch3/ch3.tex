@@ -155,10 +155,86 @@ $L_t (x_t)$は$x_{t-1} $によらないので$L_t - L_t (x_{t-1},x_t)$はどの$
 
 \begin{eqnarray}
 L_t(x_t) &=& \frac{1}{2}(x_t - (A_t \xi + B_t u_t))^T R_t ^{-1}(x_t - (A_t \xi + B_t u_t)) \nonumber  \\
- && \hspace{3cm}+\frac{1}{2} (\xi-\mu _{t-1})^T  \Sigma ^{-1}_t  (\xi-\mu _{t-1})
+ && \hspace{3cm}+\frac{1}{2} (\xi-\mu _{t-1})^T  \Sigma ^{-1}_{t-1}  (\xi-\mu _{t-1})
 \end{eqnarray}
 
+$\xi $は$x_t$に依存していることに注意しなくてはならないが、この式は$x_t$に関して2次式なので、$L_t (x_{t-1},x_t)$と同様に$L_t(x_t)も$$\frac{1}{2}(x_{t}-\bar{\mu}_t)^T \bar{\Sigma}^{-1}_t (x_{t}-\bar{\mu}_t)$の形に変形できる。$L_t (x_{t-1},x_t)$にしたのと同様の手順で$\bar{\mu}_t, \bar{\Sigma}_t$を求める。まず$\bar{\mu}_t$を求めるために$L_t(x_t)$を$x_t$で微分する。
 
+\begin{eqnarray}
+\frac{\partial L_t(x_t)}{\partial x_t} &=&\frac{\partial }{\partial x_t} \frac{1}{2}(x_t - (A_t \xi + B_t u_t))^T R_t ^{-1}(x_t - (A_t \xi + B_t u_t)) \nonumber  \\
+ && \hspace{3cm}+\frac{\partial }{\partial x_t}\frac{1}{2} (\xi-\mu _{t-1})^T  \Sigma ^{-1}_{t-1}  (\xi-\mu _{t-1}) \\
+ &=&\frac{\partial }{\partial x_t} \frac{1}{2}(x_t ^T -\xi ^T A_t ^T  - u_t ^T B_t ^T ))^T R_t ^{-1}(x_t - A_t \xi - B_t u_t)) \nonumber  \\
+ && \hspace{3cm}+\frac{\partial }{\partial x_t}\frac{1}{2} (\xi-\mu _{t-1})^T  \Sigma ^{-1}_{t-1}  (\xi-\mu _{t-1}) \\
+ &=&\frac{1}{2}R_t ^{-1}(x_t - (A_t \xi + B_t u_t))  -\frac{1}{2}  \frac{\partial \xi ^T}{\partial x_t}A_t^TR_t ^{-1}(x_t - (A_t \xi + B_t u_t))  \nonumber \\
+ && - \frac{1}{2}(x_t - (A_t \xi + B_t u_t))^T R_t ^{-1} -  \frac{1}{2}(x_t - (A_t \xi + B_t u_t))^T R_t ^{-1}A_t\frac{\partial \xi}{\partial x_t} \nonumber \\
+&& +\frac{\partial \xi ^T}{\partial x_t}\frac{1}{2} \Sigma ^{-1}_{t-1}  (\xi-\mu _{t-1}) + \frac{1}{2} (\xi-\mu _{t-1})^T  \Sigma ^{-1}_{t-1}  \frac{\partial \xi}{\partial x_t} \hspace{2mm} \mbox{(積の微分)} \\
+&=&R_t ^{-1}(x_t - (A_t \xi + B_t u_t))  -\frac{1}{2} A_t \frac{\partial \xi}{\partial x_t}R_t ^{-1}(x_t - (A_t \xi + B_t u_t))  \nonumber \\
+&&-\frac{1}{2}(x_t - (A_t \xi + B_t u_t))^T R_t ^{-1}A_t\frac{\partial \xi}{\partial x_t} \nonumber \\
+&& +\frac{\partial \xi ^T}{\partial x_t}\frac{1}{2} \Sigma ^{-1}_{t-1}  (\xi-\mu _{t-1}) + \frac{1}{2} (\xi-\mu _{t-1})^T  \Sigma ^{-1}_{t-1}  \frac{\partial \xi}{\partial x_t} \hspace{2mm} \mbox{($R$は対称行列)} 
+\end{eqnarray}
 
+ここで、
+
+\begin{eqnarray}
+\xi &=& \Psi _t[A^T_t R_t^{-1}(x_t -B_t u_t )+\Sigma ^{-1}_{t-1} \mu _{t-1}  ] \\
+\frac{\partial \xi}{\partial x_t} &=& \Psi _t A^T_t R_t ^{-1} \\
+\frac{\partial \xi^T}{\partial x_t} &=& R_t ^{-1}A_t \Psi_t
+\end{eqnarray}
+
+である。特に$R_t ^{-1}A_t\Psi _t A^T_t R_t ^{-1}$は対称行列であることに注意すると
+
+\begin{eqnarray}
+\frac{\partial L_t(x_t)}{\partial x_t} &=& R_t ^{-1}(x_t - (A_t \xi + B_t u_t)) -R_t ^{-1}A_t\Psi _t A^T_t R_t ^{-1} (x_t - (A_t \xi + B_t u_t))\nonumber \\
+&& + R_t ^{-1}A_t \Psi_t \Sigma ^{-1}_{t-1}  (\xi-\mu _{t-1}) \hspace{2mm} \mbox{(対称な行列を整理。$x^T A^T = Ax$を用いた)} \\
+&=&[R_t ^{-1} -R_t ^{-1}A_t\Psi _t A^T_t R_t ^{-1}](x_t - B_t u_t)-R_t ^{-1}A_t \Psi_t \Sigma ^{-1}_{t-1}\mu _{t-1}\nonumber \\
+&&-[R_t ^{-1}A_t -R_t ^{-1}A_t\Psi _t A^T_t R_t ^{-1}A_t+R_t ^{-1}A_t \Psi_t \Sigma ^{-1}_{t-1}]\xi \hspace{3mm} \mbox{(項を並び替え)}
+\end{eqnarray}
+実はこの$\xi$の係数はゼロである。ここだけ計算すると
+
+\begin{eqnarray}
+&&[R_t ^{-1}A_t -R_t ^{-1}A_t\Psi _t A^T_t R_t ^{-1}A_t+R_t ^{-1}A_t \Psi_t \Sigma ^{-1}_{t-1}] \\
+&=& R_t ^{-1}A_t[I -\Psi _t A^T_t R_t ^{-1}A_t+ \Psi_t \Sigma ^{-1}_{t-1}] \\
+&=& R_t ^{-1}A_t[I -\Psi _t (A^T_t R_t ^{-1}A_t+ \Sigma ^{-1}_{t-1})] \\
+&=& R_t ^{-1}A_t[I -\Psi _t \Psi _t ^{-1}] =0
+\end{eqnarray}
+
+なので
+\begin{eqnarray}
+\frac{\partial L_t(x_t)}{\partial x_t} &=&[R_t ^{-1} -R_t ^{-1}A_t\Psi _t A^T_t R_t ^{-1}](x_t - B_t u_t)-R_t ^{-1}A_t \Psi_t \Sigma ^{-1}_{t-1}\mu _{t-1}
+\end{eqnarray}
+
+$[R_t ^{-1} -R_t ^{-1}A_t\Psi _t A^T_t R_t ^{-1}]$について、$\Psi=(A^T_t R_t ^{-1}A_t+ \Sigma ^{-1}_{t-1})^{-1}$を代入しSherman-Morrison公式を適用する。Sherman-Morrison公式は
+
+\begin{eqnarray}
+(R+PQP^T) ^{-1}=R^{-1} - R^{-1}P(Q^{-1}+P^T R^{-1} P)^{-1}P^T R^{-1} 
+\end{eqnarray}
+
+である。$R=R_t, P=A_t, Q=\Sigma _{t-1}$とすることで、$[R_t ^{-1} -R_t ^{-1}A_t\Psi _t A^T_t R_t ^{-1}]=(R_t + A_t \Sigma _{t-1}A_t ^T)^{-1}$と変形できる。
+
+\begin{eqnarray}
+\frac{\partial L_t(x_t)}{\partial x_t} &=&(R_t + A_t \Sigma A_t ^T)^{-1}(x_t - B_t u_t)-R_t ^{-1}A_t \Psi_t \Sigma ^{-1}_{t-1}\mu _{t-1}
+\end{eqnarray}
+
+この微分係数が0に等しくなるときの$x_t$がもともと求めたいものだった。実際計算すると
+
+\begin{eqnarray}
+&&(R_t + A_t \Sigma A_t ^T)^{-1}(x_t - B_t u_t)-R_t ^{-1}A_t \Psi_t \Sigma ^{-1}_{t-1}\mu _{t-1} = 0 \\
+&&x_t = B_t u_t + (R_t + A_t \Sigma A_t ^T) R_t ^{-1}A_t \Psi_t \Sigma ^{-1}_{t-1}\mu _{t-1} \nonumber \\
+&&\hspace{20mm}\mbox{(両辺に$(R_t + A_t \Sigma A_t ^T)$を左からかけて移項)}\\
+&&x_t = B_t u_t + (R_t + A_t \Sigma _{t-1}A_t ^T)R_t ^{-1}A_t (A^T_t R_t ^{-1}A_t+ \Sigma ^{-1}_{t-1})^{-1} \Sigma ^{-1}_{t-1}\mu _{t-1} \\
+&&x_t = B_t u_t + (A_t + A_t \Sigma _{t-1}A_t ^TR_t ^{-1}A_t) (A^T_t R_t ^{-1}A_t+ \Sigma ^{-1}_{t-1})^{-1} \Sigma ^{-1}_{t-1}\mu _{t-1} \\
+&&x_t = B_t u_t + (A_t + A_t \Sigma _{t-1}A_t ^TR_t ^{-1}A_t)  (\Sigma _{t-1}A^T_t R_t ^{-1}A_t+ \Sigma _{t-1} \Sigma ^{-1}_{t-1})^{-1}\mu _{t-1} \nonumber \\
+&& \hspace{20mm}\mbox{($(AB)^{-1}=B^{-1}A^{-1}$の性質を利用)}\\
+&&x_t = B_t u_t + A_t(I + \Sigma _{t-1}A_t ^TR_t ^{-1}A_t)  (\Sigma _{t-1}A^T_t R_t ^{-1}A_t+ I)^{-1}\mu _{t-1} \\
+&& x_t = B_t u_t + A_t \mu _{t-1} = \bar{\mu }_t
+\end{eqnarray}
+
+予測ステップの導出の最後は$\bar{\Sigma }_t$の計算である。これは$\Psi$を計算したときと同じ議論で、$L_t (x _t )$の2階微分の逆行列になる。
+2階微分の計算は以下の通り
+\begin{eqnarray}
+\frac{\partial L_t(x_t)}{\partial x_t} &=&(R_t + A_t \Sigma _{t-1} A_t ^T)^{-1}(x_t - B_t u_t)-R_t ^{-1}A_t \Psi_t \Sigma ^{-1}_{t-1}\mu _{t-1} \\
+\frac{\partial ^2 L_t(x_t)}{\partial x_t ^2} &=&(R_t + A_t \Sigma _{t-1} A_t ^T)^{-1}= \bar{\Sigma} _t ^{-1}
+\end{eqnarray}
+これで予測ステップの信念の更新を導けた。
 
 \end{document}
