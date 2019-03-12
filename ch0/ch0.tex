@@ -100,8 +100,8 @@ f(\vec{x})=f(\vec{a})+\frac{\partial f(\vec{a})}{\partial x_i}(x_i -  a_i) + \fr
 そうすれば、テイラー展開のうち$\vec{x}$の0次の項と2次の項のみが残る形に変形できる。
 
 \begin{eqnarray}
-f(\vec{x}) &=& f(\vec{a}) + \frac{1}{2} (\vec{x}-\vec{a}) ^T \frac{\partial ^2 f(\vec{a})}{\partial \vec{x} ^2} (\vec{x}-\vec{a}) \\
-&=&f(\vec{a}) + \frac{1}{2} (\vec{x}-\vec{a}) ^T \Sigma ^{-1} (\vec{x}-\vec{a})
+f(\vec{x}) &=& f(\hat{\vec{a}}) + \frac{1}{2} (\vec{x}-\hat{\vec{a}}) ^T \frac{\partial ^2 f(\hat{\vec{a}})}{\partial \vec{x} ^2} (\vec{x}-\hat{\vec{a}}) \\
+&=&f(\hat{\vec{a}}) + \frac{1}{2} (\vec{x}-\hat{\vec{a}}) ^T \Sigma ^{-1} (\vec{x}-\hat{\vec{a}})
 \end{eqnarray}
 
 最後の変形は多変量正規分布でよく使われる形に合わせて行った。なお、多変量正規分布の指数関数の肩に現れる場合には0次の項は正規化因子に含めることができるので、最終的な分布の計算を終えるまで計算を先送りできる。
