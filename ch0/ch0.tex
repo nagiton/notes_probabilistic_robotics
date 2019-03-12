@@ -77,4 +77,32 @@ $ \frac{\partial f(\vec{x})}{\partial x_i}$は、ベクトル$\vec{x}$に依存�
 
 定数行列がかかったベクトルの微分と積の微分を両方使うことで確認できる。
 
+
+\subsection{多変数の平方完成}
+$\vec{x},\vec{a},\vec{b}$を$n$成分のベクトル、$A, B$を$n\times n$成分の行列として、以下のような多項式を平方完成しなくてはならないとき、うんざりした気持ちになったりしないだろうか。
+
+\begin{eqnarray}
+(\vec{x}-\vec{a})^T A (\vec{x}-\vec{a}) + (\vec{x}-\vec{b})^T B (\vec{x}-\vec{b}) 
+\end{eqnarray}
+
+愚直に展開しても当然平方完成できる。ただ項が増えると計算ミスしやすくなる。そこで、平方完成という操作を多項式の項の整理ではなく、1次の微分係数が消えている点の周りでのテイラー展開を求める操作と考えると計算が簡単になることがある。一般に適当な滑らかさを持つ、ベクトル変数スカラー値の関数$f(\vec{x})$の、ある点$\vec{a}$のまわりでの、2次で打ち切ったテイラー展開は以下の通りである。
+
+\begin{eqnarray}
+f(\vec{x})=f(\vec{a})+\frac{\partial f(\vec{a})}{\partial x_i}(x_i -  a_i) + \frac{1}{2}\frac{\partial ^2 f(\vec{a})}{\partial x_i \partial x_j}(x_i -  a_i)(x_j -  a_j) 
+\end{eqnarray}
+
+平方完成が目的なのだから、$f$は$x_i$の2次式であるはずなので、テイラー展開の3次以上の項はない。平方完成のアルゴリズムは以下の通りである。
+
+(1)まず、$\frac{\partial f(\vec{a})}{\partial x_i}=0$を満たす点$\hat{\vec{a}}$を求める
+
+(2)$\frac{\partial ^2 f(\hat{\vec{a}})}{\partial x_i \partial x_j}$を計算する
+
+そうすれば、テイラー展開のうち$\vec{x}$の0次の項と2次の項のみが残る形に変形できる。
+
+\begin{eqnarray}
+f(\vec{x}) &=& f(\vec{a}) + \frac{1}{2} (\vec{x}-\vec{a}) ^T \frac{\partial ^2 f(\vec{a})}{\partial \vec{x} ^2} (\vec{x}-\vec{a}) \\
+&=&f(\vec{a}) + \frac{1}{2} (\vec{x}-\vec{a}) ^T \Sigma ^{-1} (\vec{x}-\vec{a})
+\end{eqnarray}
+
+最後の変形は多変量正規分布でよく使われる形に合わせて行った。なお、多変量正規分布の指数関数の肩に現れる場合には0次の項は正規化因子に含めることができるので、最終的な分布の計算を終えるまで計算を先送りできる。
 \end{document}

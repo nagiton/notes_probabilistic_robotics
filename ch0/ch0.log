@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.6-141210-2.6 (utf8.euc) (TeX Live 2015/Debian) (preloaded format=platex 2019.3.7)  9 MAR 2019 12:48
+This is e-pTeX, Version 3.14159265-p3.6-141210-2.6 (utf8.euc) (TeX Live 2015/Debian) (preloaded format=platex 2019.3.7)  12 MAR 2019 20:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -140,14 +140,15 @@ LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
 (Font)              Font shape `JY1/gt/m/n' tried instead on input line 43.
  [1
 
-] [2] (./ch0.aux) ) 
+] [2] [3]
+(./ch0.aux) ) 
 Here is how much of TeX's memory you used:
  1178 strings out of 493723
  12899 string characters out of 6152571
- 75084 words of memory out of 5000000
+ 78084 words of memory out of 5000000
  4757 multiletter control sequences out of 15000+600000
  14103 words of font info for 56 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 27i,11n,26p,291b,173s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 27i,11n,26p,397b,173s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on ch0.dvi (2 pages, 6744 bytes).
+Output written on ch0.dvi (3 pages, 10208 bytes).
